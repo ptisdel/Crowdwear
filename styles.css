@@ -1,0 +1,809 @@
+body {    
+    color:black;
+    font-family: 'Open Sans', sans-serif;
+    margin:0px;
+    background:#DFE5EF;
+    box-sizing:border-box;
+}
+
+
+#splashBlock {    
+    background:white;
+    position:fixed;
+    width:100%;
+    height:100%;
+    z-index:99; 
+    display:table;
+    transition:all 0.5s ease-in;
+}
+
+#splashBlock.off {
+    visibility:collapse;
+    opacity:0;
+}
+
+#splashBlock div {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 1.7em;
+    font-weight: 100;
+    color: dimgrey;
+}
+
+#splashBlock p {
+    opacity:0;
+    transition:opacity 1s;    
+}
+
+#splashBlock p.show {
+    opacity:1;
+}
+
+#splashBlock span {
+    font-weight: 600;
+}
+
+h1 {
+    font-weight:bold;
+    font-size: 24px;
+    height:24px;
+    line-height:24px;
+    left:1em;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    margin:auto;
+}
+
+h1 > a {
+    color:white;
+    text-decoration:none;
+}
+
+h1 span {
+    font-weight:100;
+}
+
+h2 { 
+    font-weight:100; 
+    margin-bottom: 0.5em;
+}
+
+h3 {
+    font-size:20px;
+    cursor:pointer;
+    margin-bottom: 0.5em;
+    margin-top:2em;
+    display:table;
+}
+
+hr {    
+    border: 1px solid #C4CCDA;
+    border-top: 1px;
+    margin-bottom: 1.5em;
+}
+
+.center { text-align:center; }
+
+.column { 
+    position:absolute;
+    left:0;
+    right:0;
+    margin:auto;
+    width:850px;   
+    padding: 0em 2em;  
+    box-sizing: border-box;
+}
+
+#topBar {
+    background: #469dd0;
+    color: white;
+    height:2.5em;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1;
+}
+
+.filterHeader {
+    width: 100%;
+    background: #156FA5;
+    box-sizing: border-box;
+    font-size: 13px;
+    padding: 0.11em 1em;
+    text-align: center;
+    font-weight:100;
+}
+
+#filtersList {
+    height:100%;
+    background:#469DD0;
+    position:absolute;
+    left:0;
+    right:0;
+    margin:auto;
+    width:850px;   
+    padding: 0em;  
+    box-sizing: border-box;
+}
+
+#filtersList > li {
+    background: transparent;
+    color: white;
+    height: 100%;
+    border: none;
+    margin-right:2em;
+    cursor:pointer;
+    display: inline-block;
+    position: relative;
+    z-index:1;
+}
+
+#search-button {
+    z-index:0 !important;
+}
+
+
+#filtersList ul {
+    background:#2d8cc3;
+    list-style: none;
+    padding: 0;
+    padding-bottom: 0.2em;
+}
+
+#filtersList ul:last-child {    
+    /*padding-bottom: inherit;*/
+}
+
+#filtersList > li > div:not(.filterBlock) {   
+    line-height: 40px;
+    padding-left: 1em;
+    padding-right: 1em;
+    display: inline-block;
+    white-space: nowrap;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* IE/Edge */
+    user-select: none;   
+}
+
+#filtersList > li:hover > div:not(.filterBlock) {
+    background-color:#125C88;
+}
+
+#filtersList > li > div.filterBlock {
+    display:none;
+}
+
+#filtersList:not(.tapped) > li:hover > div.filterBlock {
+    display:block;
+    width: 170px;
+    position: absolute;
+}
+
+
+#filtersList > li > div.filterBlock > ul > li {
+    padding: 0.3em 1em;
+    position:relative;
+    font-size: 13px;
+}
+
+#filtersList > li:hover > div.filterBlock > ul > li:hover {
+    background:#1e648e;
+}
+
+#filtersList li.selected:after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 20px;
+    height: 20px;
+    display: block;
+    background-size: contain;
+    background-image: url(images/checkmark.png);
+    z-index: 2;
+}
+
+#filtersList > #search-button {
+    margin-right:0;
+}
+
+#filtersList > #search-button > #search-icon {
+    height:40px;
+    width:40px;
+    background-image:url(images/magnifying-glass.png);
+    background-size: 70%;
+    background-repeat:no-repeat;
+    padding-left:0;
+    padding-right:0;
+    background-position: center;
+}
+
+#search-icon.open {
+    background:#287daf;
+}
+
+
+#search-container {  
+    display:none;
+    padding: 1em;
+    position: absolute;
+    right:0;
+    background:#287daf;
+    padding: 4px 12px !important;
+}
+
+#search-container > input {
+    width:170px;
+    box-sizing:border-box;
+    padding: 0.3em 0.4em;
+    font-family: 'Open Sans', sans-serif;
+    border: 0;
+}
+
+
+
+#chosenFilters, #chosenKeywords {    
+    font-size: 0.8em;
+    color:#469DD0;
+    visibility:hidden;
+}
+
+#chosenFilters.visible, #chosenKeywords.visible {   
+    visibility:visible;
+}
+
+#chosenFilters > span, #chosenKeywords > span {    
+    font-weight: 100;
+    color:black;
+}
+
+#helpText {
+    color: #616161;
+    font-size: 0.8em;
+    font-weight: 100;
+}
+
+#clearButton {
+    margin-left: 0.5em;
+    font-size: 0.8em;
+    font-weight: lighter;
+    color: #616161;
+    cursor: pointer;
+    margin-bottom: 1em;
+    display:inline-block;
+}
+
+#clearButton:hover {
+    font-weight: 400;
+    color: #226790;
+}
+
+#chosenFilters > ul {    
+    padding:0;
+    list-style:none;
+    display:inline;
+}
+
+#chosenFilters > ul > li {
+    
+    display: inline;
+    font-weight: normal;
+    color: #E48000;
+}
+
+#chosenFilters > ul > li:after {
+    content: ", ";
+    color:black;
+    font-weight:100;
+}
+
+/*DETECTS IF ONLY TWO ITEMS IN PARENT AND HIDES THEM */
+#chosenFilters > ul > li:first-child:nth-last-child(2):after {
+    content:" ";
+}
+
+#chosenFilters > ul > li:last-child:after {
+    content: "";
+    color:black;
+    font-weight:100;
+}
+
+#chosenFilters > ul > li:first-child:before {
+    content:"" !important;
+}
+
+#chosenFilters > ul > li:last-child:before {
+    content: "and ";
+    color:black;
+    font-weight:100;
+}
+
+
+
+#dataLink {
+    right: 1em;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    height: 1em;
+    line-height:1em;
+    display: block;
+    margin: auto;
+    color:white;
+    text-decoration:none;
+}
+
+#resultsPane {
+    box-shadow:0px 0px 250px rgba(0,0,0,0.1); 
+    min-height:100%;
+    padding: 0em 3em;
+    padding-bottom:3em;
+    padding-top:6em;
+    max-width: 100%;
+    background:#F2F4F7;
+	perspective: 1000;
+}
+
+.resultContainer {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: space-between; 
+    margin:-1em;
+}
+
+
+.placeholderText {
+    color: gray;
+    font-weight: 100;
+}
+
+.placeholderChar {
+    width:162px;    
+    margin:1em;
+}
+
+/*DETECTS IF ONLY TWO ITEMS IN PARENT AND HIDES THEM */
+.placeholderChar:first-child:nth-last-child(2),
+.placeholderChar:first-child:nth-last-child(2) ~ .placeholderChar {
+    display:none;
+}
+
+
+.charBox {
+    width: 162px;
+    box-shadow: 2px 3px 6px rgba(0,0,0,0.25);
+    background: white;
+    height: 212px;
+    display: inline-block;
+    margin: 1em;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 1em;
+    transition: transform 0.1s, visibility 0s linear 0.5s;
+}
+
+.charBox.hidden {
+    visibility:hidden;
+    transition: visibility 0s;
+}
+
+.charIcon {
+    width: 100%;
+    height: 150px;
+    box-sizing: border-box;
+    background-color:white;
+    background-size: cover;
+    background-position: center center;
+}
+
+.charBox:not(#frontOfCard):hover  {    
+    background: #E48000;
+    color: white;
+    transform: scale(1.1);
+    /*z-index:1;*/
+}
+
+.charTextPane {
+    width: 100%;
+    height: 62px;
+    display: table;
+}
+
+.charText {    
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+
+.name {
+    margin-top:0px; 
+    margin-bottom:0.2em;
+    line-height: 1em;
+}
+
+.mediaTitle {
+    margin-top:0;
+    font-size: 0.6em;
+    text-transform:uppercase;
+    margin-bottom: 0;
+}
+
+#backOfCard .mediaTitle {
+    
+}
+#shadowbox {
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    background:#020D21;
+    opacity:0;
+    z-index:2;
+    visibility:collapse;
+    transition:opacity 0.5s, visibility 0s linear 0.5s;
+    pointer-events:none;
+}
+
+#shadowbox.visible {
+    visibility:visible;
+    opacity:0.5;
+    transition:opacity 0.5s, visibility 0s;
+    pointer-events:all;
+}
+
+#charDetailCard {
+    background:transparent;
+    position:fixed;
+    box-sizing: border-box;
+    z-index:0;
+    margin:0;
+	transform-style: preserve-3d;
+    visibility:collapse;
+}
+
+
+#frontOfCard, #backOfCard {
+    position:absolute;
+    backface-visibility: hidden;
+    box-shadow: none;
+    margin: auto !important;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+#frontOfCard {    
+	transform: scale(1.1);
+}
+
+#backOfCard {
+    visibility:hidden;
+    box-sizing: border-box;
+    padding: 1em;
+    background: linear-gradient(to left bottom, white, #D8D8D8);
+    width: 300px;
+    height:394px;
+}
+
+#backOfCard  h4 {
+    margin-top:0em;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+#backOfCardIcon {
+    width:50px;
+    height:50px;
+    float:left;
+    background-size: cover;
+    background-position:center center;
+    background-repeat:no-repeat;
+    margin-right: 1em;
+    border: 1px solid #CECECE;
+}
+
+#backOfCard > table {
+    font-weight: 100;
+    font-size: 14px;
+    border-collapse: collapse;
+    position: absolute;
+    bottom: 2em;
+    left: 1em;
+}
+
+#backOfCard td:first-child {
+    border-right:1px solid #B1B1B1;
+    text-align:center;
+}
+
+#backOfCard td {
+    padding:0em 1em 1.5em 1em;
+}
+
+#backOfCard tr:last-child td {
+    padding-bottom:0;
+}
+
+#backOfCard a {
+    text-decoration:none;
+}
+
+#backOfCard a:hover {
+    text-decoration:underline;
+}
+
+#backOfCard img{    
+    max-height: 20px;
+    max-width: 20px;
+    vertical-align: middle;
+}
+/*
+#charDetailCard  .charBox {        
+    margin: 0;
+    height: 100%;
+    width:100%;
+    box-shadow:none;
+}
+
+#charDetailCard .charIcon {
+    height: 71%;
+}
+
+#charDetailCard  .charTextPane {
+    height:29%;
+    font-size: 1.84em;
+    margin-top: 2px;
+    margin-left: -1px;
+}
+
+#frontOfCard.flip  .charBox:hover {
+    transform:inherit;
+    cursor:inherit;
+}
+*/
+
+
+#frontOfCard.flip .charTextPane {    
+    background: #E48000;
+    color: white;
+}
+
+
+#endOfResults {
+    height: 100px;
+    display: block;
+    text-align: center;
+    width: 100%;
+    max-width: 850px;
+    color: black;
+    margin-top: 1em;
+    font-weight: 100;
+    padding-top: 2em;
+}
+
+
+
+#supportTab {
+    position: fixed;
+    right: 1em;
+    bottom: 0;
+    background: #E48000;
+    width: 150px;
+    height: 23px;
+    padding: 0.3em 0.5em;
+}
+
+#supportTab > a {
+    color:white;
+    text-decoration:none;
+    font-weight: 100;
+}
+
+#supportTab > a:hover {
+    text-decoration:underline;
+}
+
+.close {
+    width: 15px;
+    position: absolute;
+    height: 15px;
+    background: url(images/x.png);
+    background-size: contain;
+    right: 8px;
+    top: 10px;
+    margin: auto;
+    cursor:pointer;
+}
+
+.close.black {
+    filter: brightness(0);
+    -webkit-filter: brightness(0);
+    width: 20px;
+    height: 20px;
+}
+
+
+/*
+.animating {
+  list-style:none;
+  box-sizing:border-box;
+}
+
+.animating.ng-move,
+.animating.ng-enter,
+.animating.ng-leave {
+  -webkit-transition:all linear 0.2s;
+  transition:all linear 0.2s;
+}
+
+.animating.ng-leave.ng-leave-active,
+.animating.ng-move,
+.animating.ng-enter {
+  
+    -webkit-transform: scaleY(0);
+    -moz-transform: scaleY(0);
+    -ms-transform: scaleY(0);
+    -o-transform: scaleY(0);
+    transform: scaleY(0);
+	height: 0px;
+	opacity: 0;
+}
+
+.animating.ng-leave,
+.animating.ng-move.ng-move-active,
+.animating.ng-enter.ng-enter-active {
+  -webkit-transform: scaleY(1);
+    -moz-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    -o-transform: scaleY(1);
+    transform: scaleY(1);
+	height: 30px;
+	opacity: 1;
+}
+*/
+
+
+@media only screen and (max-width: 1200px)  {
+    
+    #filtersList {
+        position: fixed;
+        top: 40px;
+        height: 40px;
+        background: #3B84AF;
+        margin: 0;
+        width: 100%;
+        justify-content: space-between;
+        display: flex;
+    }
+    
+    #filtersList > li {
+        margin-right:0;
+    }
+    
+    #filtersList > li:hover > div:not(.filterBlock) {
+        background-color: #125C88;
+    }
+    
+    
+    #filtersList ul {
+        /*background: #12425F;*/
+    }
+    
+    
+    #resultsPane {
+        padding-top: 8em;
+    }
+    
+    #search-icon.open {
+        background:#226790;
+    }
+    
+    #search-container {
+        background:#226790;
+    }
+
+}
+
+
+
+
+@media only screen and (max-width: 655px)  {
+    
+        
+    #filtersList {
+        font-size:14px;
+        justify-content: space-around;
+        padding-left:0em;
+        padding-right:0em;
+    }
+    
+    #filtersList > li:hover > div.filterBlock  {
+        width:155px;
+    }
+    
+    #filtersList > li:nth-last-child(2) > div.filterBlock  {
+        right:0;
+    }
+    
+    #resultsPane {
+        padding-top: 7em;
+        box-shadow:none;
+    }
+    
+}
+
+
+
+@media only screen and (max-width: 550px)  {
+     #filtersList {
+        font-size:11px;
+    }   
+    
+    #filtersList > li { 
+        position:static;
+    }
+    
+    #filtersList > li > div:not(.filterBlock) {        
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+    
+    #filtersList > li:hover > div.filterBlock  {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+    }
+    
+    .filterHeader {        
+        font-size: 17px;
+    }
+    
+    #filtersList > li > div.filterBlock > ul > li {
+        
+        font-size:15px;
+    }
+    
+    #resultsPane {
+        padding-top: 6em;
+    }
+    
+    .charBox {
+        width: 100%;
+        margin-bottom: 1em;
+        box-shadow:none;    
+        border: 1px solid #D4D4D4;
+        
+    }
+    
+    
+    #supportTab {
+        left: 0;
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+        height: 34px;
+    }
+    
+    h2 {
+        font-size: 18px;
+    }
+    
+    #filtersList > #search-button > #search-icon {
+        width: 30px;
+    }
+        
+}

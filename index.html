@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CrowdWEAR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="favicons/apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="favicons/apple-touch-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon-180x180.png">
+<link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="favicons/favicon-194x194.png" sizes="194x194">
+<link rel="icon" type="image/png" href="favicons/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="favicons/android-chrome-192x192.png" sizes="192x192">
+<link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="favicons/manifest.json">
+<link rel="mask-icon" href="favicons/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="favicons/favicon.ico">
+<meta name="msapplication-TileColor" content="#2b5797">
+<meta name="msapplication-TileImage" content="favicons/mstile-144x144.png">
+<meta name="msapplication-config" content="favicons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+    
+<meta property="og:url"                content="http://www.crowdwear.patricktisdel.com" />
+<meta property="og:type"               content="website" />
+<meta property="og:title"              content="CrowdWear - Who do you want to be today?" />
+<meta property="og:description"        content="Find a costume that matches your body type." />
+<meta property="og:image"              content="http://www.crowdwear.patricktisdel.com/images/share-banner.png" />
+    
+    
+    <link href="styles.css" rel="stylesheet" type="text/css">
+    
+    
+    
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,700,300,600,800,400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic,500italic,700italic,300|Roboto+Condensed:400italic,400' rel='stylesheet' type='text/css'>
+</head>
+
+<body ng-app="CostumeFinder" ng-controller="CostumeController as vm">
+    
+    <div id="splashBlock" ng-class="{off: vm.showSplash==false}" ng-click="vm.hideSplash()">
+        <div>
+            <p ng-cloak ng-class="{show: vm.splashText != ''}">Let CrowdWear help you<br/>find your <span style="color: {{vm.splashTextColor}}">{{vm.splashText}}</span> costume.</p>
+        </div>
+    </div>
+   
+    <div id="topBar">
+        
+        <h1><a href="http://crowdwear.patricktisdel.com"><span>Crowd</span>Wear</a></h1>
+    
+        <ul id="filtersList" ng-cloak>        
+            <li>
+                <div>Demographics &#9662;</div>
+                <div class="filterBlock">
+                    <div class="filterHeader">Gender</div>
+                    <ul>
+                        <li ng-class="{selected: vm.filters.gender==''}" ng-click="vm.filters.gender='';">All Genders</li>
+                        <li ng-class="{selected: vm.filters.gender==costume.gender}"  ng-click="vm.filters.gender=costume.gender;" ng-repeat="costume in vm.Costumes  | unique:'gender'">{{costume.gender | capitalize}}</li>                    
+                    </ul>   
+                    <div class="filterHeader">Age</div>
+                    <ul>
+                        <li ng-class="{selected: vm.filters.age==''}"  ng-click="vm.filters.age='';">All Ages</li>
+                        <li ng-class="{selected: vm.filters.age==costume.age}"   ng-click="vm.filters.age=costume.age;" ng-repeat="costume in vm.Costumes  | unique:'age'">{{costume.age | capitalize}}</li>                    
+                    </ul> 
+                    <div class="filterHeader">Skin Tones</div>
+                    <ul>
+                        <li ng-class="{selected: vm.filters.skintone==''}"  ng-click="vm.filters.skintone='';">All Skin Tones</li>
+                        <li ng-class="{selected: vm.filters.skintone==costume.skintone}"   ng-click="vm.filters.skintone=costume.skintone;" ng-repeat="costume in vm.Costumes  | unique:'skintone'">{{costume.skintone | capitalize}}</li>                    
+                    </ul> 
+                </div>
+            </li>        
+            
+            <li>
+                <div>Body &#9662;</div>
+                
+                <div class="filterBlock">
+                    <div class="filterHeader">Height</div>
+                    <ul>
+                        <li ng-class="{selected: vm.filters.height==''}"  ng-click="vm.filters.height='';">All Heights</li>
+                        <li ng-class="{selected: vm.filters.height==costume.height}"   ng-click="vm.filters.height=costume.height;" ng-repeat="costume in vm.Costumes  | unique:'height'">{{costume.height | capitalize}}</li>                    
+                    </ul> 
+                    <div class="filterHeader">Weight</div>
+                    <ul>
+                        <li ng-class="{selected: vm.filters.weight==''}"  ng-click="vm.filters.weight='';">All Weights</li>
+                        <li ng-class="{selected: vm.filters.weight==costume.weight}"   ng-click="vm.filters.weight=costume.weight;" ng-repeat="costume in vm.Costumes  | unique:'weight'">{{costume.weight | capitalize}}</li>                    
+                    </ul>
+                    <div class="filterHeader">Bust Size</div>
+                    <ul>
+                        <li ng-class="{selected: vm.filters.bustsize==''}"  ng-click="vm.filters.bustsize='';">All Bust Sizes</li>
+                        <li ng-class="{selected: vm.filters.bustsize==costume.bustsize}"   ng-click="vm.filters.bustsize=costume.bustsize;" ng-repeat="costume in vm.Costumes  | unique:'bustsize'">{{costume.bustsize | capitalize}}</li>                    
+                    </ul> 
+                </div>
+            </li>    
+            <li>
+                <div>Hair &#9662;</div>
+                
+                <div class="filterBlock">
+                    <div class="filterHeader">Hair Color</div>
+                    <ul>
+                        <li ng-class="{selected: vm.filters.haircolor==''}"  ng-click="vm.filters.haircolor='';">All Hair Colors</li>
+                        <li ng-class="{selected: vm.filters.haircolor==costume.haircolor}"   ng-click="vm.filters.haircolor=costume.haircolor;" ng-repeat="costume in vm.Costumes  | unique:'haircolor'">{{costume.haircolor | capitalize}}</li>                    
+                    </ul> 
+                    <div class="filterHeader">Hair Length</div>
+                    <ul>
+                        <li ng-class="{selected: vm.filters.hairlength==''}"  ng-click="vm.filters.hairlength='';">All Hair Lengths</li>
+                        <li ng-class="{selected: vm.filters.hairlength==costume.hairlength}"   ng-click="vm.filters.hairlength=costume.hairlength;" ng-repeat="costume in vm.Costumes  | unique:'hairlength'">{{costume.hairlength | capitalize}}</li>                    
+                    </ul> 
+                </div>
+            </li>    
+            
+            <li>
+                <div>Facial Features &#9662;</div>
+                
+                <div class="filterBlock">
+                    <div class="filterHeader">Eye Color</div>
+                    <ul>
+                        <li ng-class="{selected: vm.filters.eyecolor==''}"  ng-click="vm.filters.eyecolor='';">All Eye Colors</li>
+                        <li ng-class="{selected: vm.filters.eyecolor==costume.eyecolor}"   ng-click="vm.filters.eyecolor=costume.eyecolor;" ng-repeat="costume in vm.Costumes  | unique:'eyecolor'">{{costume.eyecolor | capitalize}}</li>                    
+                    </ul>   
+                    <div class="filterHeader">Eyewear</div>
+                    <ul>
+                        <li ng-class="{selected: vm.filters.eyewear==''}"  ng-click="vm.filters.eyewear='';">All Eyewear</li>
+                        <li ng-class="{selected: vm.filters.eyewear==costume.eyewear}"   ng-click="vm.filters.eyewear=costume.eyewear;" ng-repeat="costume in vm.Costumes  | unique:'eyewear'">{{costume.eyewear | capitalize}}</li>                    
+                    </ul>  
+                </div>
+            </li>   
+            
+            
+            <li>
+                <div>Region &#9662;</div>
+                
+                <div class="filterBlock">
+                    <div class="filterHeader">Region</div>
+                    <ul>
+                        <li ng-class="{selected: vm.filters.region==''}"  ng-click="vm.filters.region='';">All Regions</li>
+                        <li ng-class="{selected: vm.filters.region==costume.region}"   ng-click="vm.filters.region=costume.region;" ng-repeat="costume in vm.Costumes  | unique:'region'">{{costume.region }}</li>                    
+                    </ul>            
+                </li>   
+
+                <li id="search-button">
+                    <div id="search-icon" ng-click="vm.toggleSearch()" ng-class="{open: vm.searchOpen}">&nbsp;</div>                      
+                        <div id="search-container" ng-show="vm.searchOpen">
+                            <input type="text" ng-model="vm.searchTerms" placeholder="Search by keywords" ></input>         
+                        </div>
+               
+            </li>
+            
+        </ul>
+            
+
+
+    
+        <a target="_blank" href="https://docs.google.com/spreadsheets/d/1Gg6EjQZdRwrz0-3kxYqteDAWuD8BxlgvFk2DPKJAI-0/edit?usp=sharing" id="dataLink">DATA</a>
+    
+    </div>
+    
+    <div id="resultsPane" ng-hide="vm.showSplash" class="column">
+    
+        <h2 class="center" >Who do you want to be today?</h2>
+        <div id="helpText" class="center" ng-show="vm.NoFiltersCheck() && vm.searchTerms==''"><span>(select filters above)</span></div>
+        <div id="chosenFilters" class="center" ng-class="{visible: vm.NoFiltersCheck()==false}" ng-cloak><span>Someone... </span><ul>
+            <!--<li ng-repeat="filter in filters">{{filters}}</li>-->
+            
+            <li ng-repeat="filterLabel in filterLabels = (vm.filters | GetFilterLabels)">{{filterLabel}}</li>
+            
+            </ul>    
+            <br/>      
+            <span id="clearButton" ng-click="vm.clearAllFilters(); vm.searchTerms=''">(clear filters)</span>
+        </div>
+        <div id="chosenKeywords" class="center" ng-class="{visible: vm.searchTerms!=''}" ng-cloak> <span>Search terms:</span> {{vm.searchTerms}}</div>
+             
+            
+
+
+        <h3 ng-click="vm.hideFilm=!vm.hideFilm">FILM <span ng-hide="vm.hideFilm">&#9662;</span><span ng-show="vm.hideFilm">&#9666;</span></h3>
+        
+        <hr ng-hide="vm.hideFilm"/>
+        <div id="filmResults" class="resultContainer" ng-show="!vm.hideFilm && FilteredFilmCostumes.length" ng-cloak>
+            <div class="animating charBox" ng-repeat="x in FilteredFilmCostumes = (vm.filteredCharacters | MatchingMediaType:'film' | filter:vm.searchTerms)" ng-click="vm.SelectCard(x, $event);" >
+                <div class="charIcon" ng-style="{'background-image':'url('+x.imageURL+'),url(images/no-icon.png)'}"></div>
+                    <div class="charTextPane">
+                        <div class="charText">
+                          <p class="name">{{ x.name }}</p>
+                          <p class="mediaTitle">{{ x.mediatitle}}</p>
+                        </div>
+                    </div>
+            </div>
+            
+            <!--necessary to make the last row align to the grid of those above-->
+            <div class="placeholderChar"></div>
+            <div class="placeholderChar"></div>
+
+                
+        </div>
+        
+        <div class="placeholderText" ng-hide="vm.Costumes.length" ng-cloak>Searching...</div>
+        <div class="placeholderText" ng-hide="!vm.Costumes.length || FilteredFilmCostumes.length" ng-cloak>No results for Film.</div>
+
+        
+        <h3 ng-click="vm.hideTV=!vm.hideTV">TV <span ng-hide="vm.hideTV">&#9662;</span><span ng-show="vm.hideTV">&#9666;</span></h3>
+
+        <hr ng-hide="vm.hideTV"/>
+        <div id="TVResults" class="resultContainer" ng-show="!vm.hideTV && FilteredTVCostumes.length" ng-cloak>
+            
+            <div class="animating charBox" ng-repeat="x in FilteredTVCostumes = (vm.filteredCharacters | MatchingMediaType:'tv' | filter:vm.searchTerms)" ng-click="vm.SelectCard(x, $event);">
+                      <div class="charIcon" ng-style="{'background-image':'url('+x.imageURL+'),url(images/no-icon.png)'}"></div>
+                <div class="charTextPane">
+                    <div class="charText">
+                      <p class="name">{{ x.name }}</p>
+                      <p class="mediaTitle">{{ x.mediatitle}}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!--necessary to make the last row align to the grid of those above-->
+            <div class="placeholderChar"></div>
+            <div class="placeholderChar"></div>
+                
+        </div>
+<div class="placeholderText" ng-hide="vm.Costumes.length" ng-cloak>Searching...</div>
+                <div class="placeholderText" ng-hide="!vm.Costumes.length || FilteredTVCostumes.length" ng-cloak>No results for TV.</div>
+        
+
+        <h3 ng-click="vm.hideBooks=!vm.hideBooks">BOOKS <span ng-hide="vm.hideBooks">&#9662;</span><span ng-show="vm.hideBooks">&#9666;</span></h3>
+
+        <hr ng-hide="vm.hideBooks"/>
+        <div id="booksResults" class="resultContainer" ng-show="!vm.hideBooks && FilteredBooksCostumes.length" ng-cloak>
+            <div class="animating charBox" ng-repeat="x in FilteredBooksCostumes = (vm.filteredCharacters | MatchingMediaType:'books' | filter:vm.searchTerms)" ng-click="vm.SelectCard(x, $event);" >
+                <div class="charIcon" ng-style="{'background-image':'url('+x.imageURL+'),url(images/no-icon.png)'}"></div>
+                    <div class="charTextPane">
+                        <div class="charText">
+                          <p class="name">{{ x.name }}</p>
+                          <p class="mediaTitle">{{ x.mediatitle}}</p>
+                        </div>
+                    </div>
+            </div>
+            
+            <!--necessary to make the last row align to the grid of those above-->
+            <div class="placeholderChar"></div>
+            <div class="placeholderChar"></div>
+                
+        </div>
+        <div class="placeholderText" ng-hide="vm.Costumes.length" ng-cloak>Searching...</div>
+        <div class="placeholderText" ng-hide="!vm.Costumes.length || FilteredBooksCostumes.length" ng-cloak>No results for Books.</div>
+
+        
+           <div id="endOfResults">End of results.</div>
+        
+        
+         <div id="charDetailCard" ng-cloak>
+        <div id="frontOfCard" class="charBox">
+                <div class="charIcon" ng-style="{'background-image':'url('+vm.flippedCard.char.imageURL+')'}"></div>
+                <div class="charTextPane">
+                    <div class="charText">
+                      <p class="name">{{ vm.flippedCard.char.name }}</p>
+                      <p class="mediaTitle">{{ vm.flippedCard.char.mediatitle}}</p>
+                    </div>
+                </div>
+        </div>
+        
+        <div id="backOfCard">
+            <div class="close black" ng-click="vm.deselectCard()"></div>
+            
+            <div id="backOfCardHeader" >
+            
+            <div id="backOfCardIcon" ng-style="{'background-image':'url('+vm.flippedCard.char.imageURL+')'}">
+            </div>
+                
+                
+                <h4>{{vm.flippedCard.char.name}}</h4>
+                <span class="mediaTitle">{{vm.flippedCard.char.mediatitle}}</span>
+            
+            </div>
+        
+                
+                <table>
+                    <tr>
+                        <td><img alt="hair icon" src="images/icon-hair.png"></img></td>
+            <td><span ng-show="vm.flippedCard.char.haircolor">{{vm.flippedCard.char.haircolor | capitalize}}, </span><span ng-show="vm.flippedCard.char.hairlength">{{vm.flippedCard.char.hairlength | capitalize}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><img alt="eye icon"  src="images/icon-eye.png"></img></td>
+                        <td><span ng-show="vm.flippedCard.char.eyecolor">{{vm.flippedCard.char.eyecolor | capitalize}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><img alt="human icon"  src="images/icon-human.png"></img></td>
+<td><span ng-show="vm.flippedCard.char.skintone">{{vm.flippedCard.char.skintone | capitalize}}, </span><span ng-show="vm.flippedCard.char.height">{{vm.flippedCard.char.height | capitalize}}, </span><span ng-show="vm.flippedCard.char.weight">{{vm.flippedCard.char.weight | capitalize}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><img alt="gender icon"  src="images/icon-gender.png"></img></td>
+<td><span ng-show="vm.flippedCard.char.gender">{{vm.flippedCard.char.gender | capitalize}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><img alt="globe icon"  src="images/icon-globe.png"></img></td>
+<td><span ng-show="vm.flippedCard.char.region">{{vm.flippedCard.char.region}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><img alt="tv icon"  src="images/icon-tv.png"></img></td>
+<td><span ng-show="vm.flippedCard.char.mediatype">{{vm.flippedCard.char.mediatype | capitalize}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><img alt="dollar icon" src="images/icon-dollar.png"></img></td>
+                        <td><a target="_blank" href='{{vm.flippedCard.char.suggestedretailer}}' ng-show="vm.flippedCard.char.suggestedretailer">Suggested costume retailer</a></td>
+                    </tr>
+                </table>
+                
+            
+        </div>
+    
+    </div>
+
+ 
+
+        
+    </div>
+    
+    <div id="shadowbox" ng-class="{visible: vm.shadowbox}" ng-click="vm.deselectCard()" ng-cloak></div>
+    
+   
+    
+    <div id="supportTab" ng-hide="vm.hideSupport">
+    
+        <a href="http://donate.patricktisdel.com">Support the site?</a>
+        <div class="close" ng-click="vm.hideSupport=true;"></div>
+    
+    </div>
+    
+    
+</body>
+    
+<footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-sanitize.min.js"></script>
+    <script src="scripts.js"></script>
+    <script src="AngularJS.js"></script>
+</footer>
+</html>
